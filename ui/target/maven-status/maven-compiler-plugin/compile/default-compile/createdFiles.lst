@@ -1,0 +1,5 @@
+lt\gallery\config\MvcConfig.class
+lt\gallery\controller\GalleryController.class
+lt\gallery\controller\SignMeUp.class
+lt\gallery\config\WebSecurityConfig.class
+lt\gallery\GalleryApplication.class

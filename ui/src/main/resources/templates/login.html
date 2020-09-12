@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Gallery login </title>
+    <link rel="stylesheet" th:href="@{/css/login_style.css}"/>
+
+</head>
+<body>
+
+<div class="Entry-form">
+<form class="login" id="login" th:action="@{/login}" method="post">
+    <div><label> User Name : <input type="text" name="username" required/> </label></div>
+    <div><label> Password: <input type="password" name="password" required/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+    <div class=" information" th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div class="information" th:if="${param.logout}">
+        You have been logged out.
+    </div>
+</div>
+
+<div class="Entry-form" style="display:none;">
+    <form action="#" class="login" id="SignUp" th:action="@{/sign}" th:object="${user}" method="post">
+        <div><label> User Name : <input   type="text" th:field="*{username}" name="username" required/> </label></div>
+        <div><label> Password: <input  type="password" th:field="*{password}" name="password" required/> </label></div>
+        <div><input type="submit" name="action" value="Save"/></div>
+    </form>
+
+</div>
+
+
+
+</body>
+</html>

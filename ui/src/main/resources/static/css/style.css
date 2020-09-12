@@ -1,0 +1,234 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #e6eef5;
+}
+
+
+.gallery {
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.galleryImg {
+    height: 100%;
+    margin-bottom: 10px;
+}
+
+.navbar-big {
+
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-around;
+    padding: 0.5rem 1rem;
+
+}
+
+.formPreview {
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.fields {
+    margin-bottom: 4px;
+}
+
+.tagSearch {
+    display: none;
+
+}
+
+.card-body {
+    background-color: #f6f6f6;
+}
+
+
+.rightColumn{
+    margin-top: 10px;
+}
+.head {
+}
+
+.headTitle {
+    margin-bottom: 10px;
+}
+
+.extraLine {
+    background-color: #8fc2c1;
+    margin-bottom: 10px;
+}
+
+
+
+
+.rightColumnFilling {
+    position: fixed;
+}
+
+#top {
+
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 99;
+    padding: 10px 20px;
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    color: white;
+    background-color: #346163;
+
+}
+
+#top:hover, #submit:hover, #submit:focus {
+
+    background: rgba(56, 62, 53, 0.41);
+    color: black;
+    transition: 0.3s;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .rightColumnFilling {
+        position: relative;
+    }
+
+    .extraSearchValues {
+        display: none;
+    }
+
+    .expandButton {
+        display: flex;
+    }
+
+    .tagSearch {
+        display: block;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .rightColumnFilling {
+        position: relative;
+        flex-wrap: wrap;
+        display: inline-block;
+    }
+
+    .extraSearchValues {
+        display: none;
+    }
+
+    .expandButton {
+        display: flex;
+    }
+
+    .tagSearch {
+        display: block;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1;
+    }
+}
+
+.buttons {
+    flex-wrap: nowrap;
+}
+
+.Entry-form {
+    margin-top: 120px;
+    display: table;
+    width: 100%;
+
+}
+
+#entry_login {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.welcome {
+    margin-bottom: 0;
+}
+
+.extraLine {
+    padding: 10px 15px;
+}
+
+input {
+    padding: 8px 10px;
+}
+
+h2 {
+    margin-top: 5px;
+    padding: 10px 15px;
+}
+.welcome,
+h1, h2, h3, h4, h5 {
+    font-family: "Book Antiqua";
+    color: white;
+
+}
+
+.card-img-top {
+    max-width: 380px;
+    max-height: 380px;
+}
+
+.card {
+    max-width: 400px;
+    padding: 8px 10px;
+    background-color:rgba(0,0,0,.03)}
+
+.card:hover{
+    background-color:rgba(0,0,0,.05);
+}
+
+
+
+.buttonTF{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    color: #fff;
+    min-height: 24px;
+    border: 2px solid transparent;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+
+    border-radius: 4px;
+    padding: 8px 16px;
+    line-height: normal;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+    -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+    -o-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: #8fc2c1;
+}
+.buttonTF:hover,
+.buttonTF:focus{
+    background-color: #2ab7ec;
+}

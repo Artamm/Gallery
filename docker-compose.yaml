@@ -1,0 +1,34 @@
+version: '3'
+services:
+  mysql:
+    container_name: mysqlgallerys
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: mysqlgallery
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: user
+      MYSQL_PASSWORD: my-secret-pw
+    ports:
+      - 3306:3306
+    restart: always
+
+
+  zk:
+    restart: "no"
+    container_name: zk
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql
+
+
+  ui:
+    restart: "no"
+    container_name: ui
+    build: ui/ .
+    ports:
+      - 8081:8080
+    depends_on:
+      - mysql

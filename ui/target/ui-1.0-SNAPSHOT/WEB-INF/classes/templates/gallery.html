@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Spring Boot Gallery</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/dist/umd/popper.js}"></script>
+    <script th:src="@{/js/galleryScript.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+
+</head>
+<body class="container-fluid" >
+<div>
+
+        <div class="row head" style="background-color: cadetblue">
+            <div class="col-md-10 col-lg-9 col-xs-6 text-left"><a class="nav-link text-dark" th:href="@{'/'}"><h2>
+                Gallery page</h2></a></div>
+            <div class="col-md-2 col-lg-3 col-xs-6 text-right">
+                <form  th:action="@{/logout}" method="post">
+                    <p class="welcome" th:inline="text">Welcome, [[${#httpServletRequest.remoteUser}]]</p>
+                    <span class="welcome" sec:authentication="principal.authorities"></span>
+                    <input style="color: #6dc2fa" class="btn btn-link" type="submit" value="Sign Out"/>
+                </form>
+            </div>
+        </div>
+
+
+    <div class="tagSearch">
+        <div id="#searchForm" class="">
+            <form th:action="@{/filter}" th:object="${picture}" method="POST">
+                <div class="fields">
+                    <input th:field="${picture.stringTags}" name="tags" type="text" placeholder="Tag1,Tag2...">
+                    <input type="submit" value="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row" style="background-color: #e6eef5">
+        <div class="gallery col-md-6 col-lg-6  col-xs-12 LeftColumn">
+            <div class="row extraLine">
+                <div class="col-md-12"><a class="nav-link text-dark" th:href="@{'/'}"> <h4>Gallery</h4></a></div>
+            </div>
+            <div class="row justify-content-md-around justify-content-lg-between justify-content-xl-start">
+                <div class="galleryImg col-lg-4 col-sm-6 col-xs-12" th:each="pic : ${pictures}">
+
+                    <div class="modify-buttons row">
+                        <form sec:authorize="hasAuthority('ADMIN')" th:action="@{'/deletePicture/{id}'(id=${pic.getId()})}" th:method="delete">
+                            <button type="submit" name="action" value="Delete" class="btn btn-link">Delete</button>
+                        </form>
+                        <form  th:if="${#authentication.getName()}==${pic.getOwner().getUsername()} or ${#authorization.expression('hasAuthority(''ADMIN'')')} " th:action="@{'/updatePicture/{id}'(id=${pic.getId()})}" th:object="${pic}"
+                              th:method="put">
+                            <button type="submit" name="action" value="Edit" class="btn  btn-link">Edit</button>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <a th:href="@{'/openFull/'}+${pic.getId()}" th:alt="${pic.getFilename()}"><img
+                                class="card-img-top" th:src="@{'/getImage/' } + ${pic.getId()}"
+                                alt="Card image cap" label="full image"></a>
+                        <div class="card-body">
+                            <h6 th:text="${pic.getText()}" class="card-text">Text</h6>
+                            <p th:text="'By: '+${pic.getAuthor()}" class="card-text">Author here</p>
+
+                            <div class="greyPart">
+                                <p th:text="'Posted: '+${pic.getDate()}" class="card-text">Author here</p>
+                                <div th:each="tag : ${pic.getTags()}">
+                                    <a href="#" th:text="'#'+${tag.getName()}"
+                                       th:href="@{'/filter/'}+${tag.getName()}"
+                                       class="card-text"></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="offset-md-1 col-md-5 col-xs-12 offset-lg-2 col-lg-4 rightColumn ">
+            <div class="rightColumnFilling">
+                <div class="row extraLine">
+                    <div class="col-md-12"><h4>Template</h4></div>
+                </div>
+                <div class="row formPreview">
+                    <div id="insertUpdateForm" class="form col-xs-12 col-sm-12 col-md-6">
+                        <form action="#" method="POST" th:action="@{/add}" th:object="${picture}"
+                              enctype="multipart/form-data">
+                            <div class="fields row">
+                                <div class="col-md-12"><input class="btn" name="file" id="imgAdd" type="file">
+                                </div>
+                                <div class="input col-md-12"><input th:field="*{filename}" name="filename" type="text"
+                                                                    placeholder="Filename (optionally) "></div>
+                                <div class="input col-12"><input id="authorId" th:field="*{author}" name="author"
+                                                                 type="text"
+                                                                 placeholder="Author..."></div>
+                                <div class="input col-12"><input id="textId" th:field="*{text}" type="text"
+                                                                 placeholder="Text.."></div>
+                                <div class="input col-12"><input id="stringTagId" th:field="*{stringTags}"
+                                                                 name="tag"
+                                                                 placeholder="Tag 1, tag 2..."
+                                                                 type="text"></div>
+                                <div class="input col-12" style="display:none"><input id="id" th:field="*{id}"
+                                                                                      name="id" type="text"></div>
+                            </div>
+                            <div class="buttons">
+                                <input class=" mt-1  buttonTF" type="submit" name="action" value="Save">
+                                <input class=" mt-1  buttonTF" type="submit" name="action" value="Update">
+                            </div>
+                        </form>
+                        <form style="display: none" action="#" th:method="put" th:action="@{/update}"
+                              th:object="${picture}"
+                              enctype="multipart/form-data">
+                            <input type="submit" name="action" value="Update">
+                        </form>
+                    </div>
+
+                    <div class="ml-sm-1 mt-sm-2 mt-xs-2 mt-md-2 mt-lg-0 ml-md-0 mt-md-0  col-xs-12  col-sm-12 col-md-6">
+                        <div id="PreviewCard" class="card ml-md-1 ml-lg-0 mt-sm-2 mt-xs-2 mt-md-2 mt-lg-0 ">
+                            <div id="image-holder"><img class="card-img-top"
+                                                        alt=" Preview image"
+                                                        th:src="@{'/getImage/' } + ${picture.getId()}"></div>
+                            <div class="card-body">
+                                <h5 th:text="${picture.filename}" class="card-title">Title</h5>
+                                <p id="TextPreview" th:text="${picture.text}" class="card-text">Text</p>
+                                <p id="AuthorPreview" th:text="${picture.author}" class="card-text">Author here</p>
+                                <p id="DatePreview" th:text="${picture.date}" class="card-text">Text</p>
+                                <p id="stringTagsPreview" th:text="${picture.stringTags}" class="card-text">tags</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Search">
+                    <div class="row extraLine">
+                        <div class="col-md-12"><h4>Search by parameters:</h4></div>
+                    </div>
+                    <form th:action="@{/filter}" th:object="${picture}" method="POST">
+                        <div class="fields row">
+                            <div class="col-md-12"><input th:field="${picture.stringTags}" name="tags" type="text"
+                                                          placeholder="Tag1,Tag2..."></div>
+                            <div class="input col-md-12"><input th:field="${picture.text}" type="text"
+                                                                placeholder="By everything else">
+
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <input class="buttonTF" type="submit" name="action" value="Exact_Search">
+                            <input class="buttonTF" type="submit" name="action" value="Search">
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button onclick="topFunction()" id="top" title="Go to top">Top</button>
+</body>
+
+</html>
